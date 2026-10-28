@@ -15,48 +15,68 @@
             height: 100vh;
             margin: 0;
         }
+        .btn-abrir {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-abrir:hover {
+            background-color: #1d4ed8;
+        }
+        .contenedor {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <div>
-        <p>Cargando aplicación...</p>
-        <p>Abriendo la aplicación en una nueva ventana limpia...</p>
+    <div class="contenedor">
+        <p>Haga clic abajo para iniciar la aplicación en una ventana limpia.</p>
+        <button class="btn-abrir" id="botonIniciar">Abrir Aplicación</button>
     </div>
 
     <script type="text/javascript">
-        // Abre una pestaña real 'about:blank' en el navegador
-        var ventanaLimpia = window.open('about:blank', '_blank');
+        document.getElementById('botonIniciar').addEventListener('click', function() {
+            // Abre una ventana real 'about:blank' mediante la acción del clic
+            var ventanaLimpia = window.open('about:blank', '_blank');
 
-        if (ventanaLimpia) {
-            // Crea un iframe a pantalla completa dentro de la ventana en blanco
-            var doc = ventanaLimpia.document;
-            doc.title = "Google Classroom";
-            
-            var iframe = doc.createElement('iframe');
-            iframe.src = "https://lexialearning.github.io/LexiaPlusAPILearning/";
-            
-            // Estilos para que el juego/app ocupe todo el espacio sin bordes
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            iframe.style.border = "none";
-            iframe.style.position = "fixed";
-            iframe.style.top = "0";
-            iframe.style.left = "0";
-            
-            doc.body.style.margin = "0";
-            doc.body.style.padding = "0";
-            doc.body.style.overflow = "hidden";
-            
-            // Inserta el iframe en la pestaña en blanco
-            doc.body.appendChild(iframe);
-            
-            // Regresa a la pestaña de origen a una página limpia o la cierra
-            window.location.replace('https://classroom.google.com/');
-        } else {
-            // Si el navegador bloquea la ventana emergente, avisa al usuario
-            alert("Por favor, permite las ventanas emergentes para abrir la aplicación de forma segura.");
-        }
+            if (ventanaLimpia) {
+                var doc = ventanaLimpia.document;
+                doc.title = "Google Classroom";
+                
+                // Configurar el cuerpo del nuevo documento
+                doc.body.style.margin = "0";
+                doc.body.style.padding = "0";
+                doc.body.style.overflow = "hidden";
+                doc.body.style.backgroundColor = "#000";
+
+                // Crear el iframe
+                var iframe = doc.createElement('iframe');
+                iframe.src = "https://lexialearning.github.io/LexiaPlusAPILearning/";
+                
+                // Estilos para pantalla completa e integración limpia
+                iframe.style.width = "100vw";
+                iframe.style.height = "100vh";
+                iframe.style.border = "none";
+                iframe.style.position = "fixed";
+                iframe.style.top = "0";
+                iframe.style.left = "0";
+                
+                // Inserta el iframe en la pestaña about:blank
+                doc.body.appendChild(iframe);
+                
+                // Redirige la pestaña actual (de origen) para no dejar rastro
+                window.location.replace('https://classroom.google.com/');
+            } else {
+                alert("Por favor, permite las ventanas emergentes en tu navegador para poder abrir la aplicación.");
+            }
+        });
     </script>
 
 </body>
